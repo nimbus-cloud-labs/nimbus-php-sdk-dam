@@ -69,6 +69,9 @@ namespace NimbusSdk\DamManagement;
  * @phpstan-type PipelineRecordResponseRulesList array<string, mixed>
  * @phpstan-type PipelineRenditionRequest array<string, mixed>
  * @phpstan-type PipelineRenditionResponse array<string, mixed>
+ * @phpstan-type PipelineRerunRequest array<string, mixed>
+ * @phpstan-type PipelineRerunResponse array<string, mixed>
+ * @phpstan-type PipelineRerunResponseOperationsList array<string, mixed>
  * @phpstan-type PipelineRuleRequest array<string, mixed>
  * @phpstan-type PipelineRuleResponse array<string, mixed>
  * @phpstan-type ProcessorCallbackPayload array<string, mixed>

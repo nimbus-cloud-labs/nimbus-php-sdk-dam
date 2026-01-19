@@ -320,6 +320,13 @@ final class DamManagementServiceClient
         return $result->body;
     }
 
+    public function rerunPipelines(array $body): array
+    {
+        $pathParams = [];
+        $result = $this->inner->invoke(self::rerunPipelinesSpec(), $pathParams, $body);
+        return $result->body;
+    }
+
     public function restoreAsset(array $params, array $body): array
     {
         $pathParams = [];
@@ -958,6 +965,25 @@ final class DamManagementServiceClient
             SdkHttpMethod::DELETE,
             '/collections/{collection_id}/memberships/{asset_id}',
             204,
+            [],
+            false,
+            null,
+            false
+        );
+        return $spec;
+    }
+
+    private static function rerunPipelinesSpec(): OperationSpec
+    {
+        static $spec = null;
+        if ($spec instanceof OperationSpec) {
+            return $spec;
+        }
+        $spec = new OperationSpec(
+            'RerunPipelines',
+            SdkHttpMethod::POST,
+            '/pipelines/rerun',
+            202,
             [],
             false,
             null,
