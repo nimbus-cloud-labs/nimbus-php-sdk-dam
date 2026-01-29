@@ -87,6 +87,13 @@ final class DamManagementServiceClient
         return $result->body;
     }
 
+    public function createBucket(array $body): array
+    {
+        $pathParams = [];
+        $result = $this->inner->invoke(self::createBucketSpec(), $pathParams, $body);
+        return $result->body;
+    }
+
     public function createCollection(array $body): array
     {
         $pathParams = [];
@@ -127,6 +134,17 @@ final class DamManagementServiceClient
         }
         $pathParams['prefix_id'] = (string) $params['prefix_id'];
         $result = $this->inner->invoke(self::deleteAssetPrefixSpec(), $pathParams, null);
+        return $result->body;
+    }
+
+    public function deleteBucket(array $params): mixed
+    {
+        $pathParams = [];
+        if (!array_key_exists('bucket_name', $params)) {
+            throw new InvalidPathError('bucket_name');
+        }
+        $pathParams['bucket_name'] = (string) $params['bucket_name'];
+        $result = $this->inner->invoke(self::deleteBucketSpec(), $pathParams, null);
         return $result->body;
     }
 
@@ -230,6 +248,13 @@ final class DamManagementServiceClient
         }
         $pathParams['asset_id'] = (string) $params['asset_id'];
         $result = $this->inner->invoke(self::listAssetRenditionsSpec(), $pathParams, null);
+        return $result->body;
+    }
+
+    public function listBuckets(): array
+    {
+        $pathParams = [];
+        $result = $this->inner->invoke(self::listBucketsSpec(), $pathParams, null);
         return $result->body;
     }
 
@@ -536,6 +561,25 @@ final class DamManagementServiceClient
         return $spec;
     }
 
+    private static function createBucketSpec(): OperationSpec
+    {
+        static $spec = null;
+        if ($spec instanceof OperationSpec) {
+            return $spec;
+        }
+        $spec = new OperationSpec(
+            'CreateBucket',
+            SdkHttpMethod::POST,
+            '/buckets',
+            201,
+            [],
+            false,
+            null,
+            false
+        );
+        return $spec;
+    }
+
     private static function createCollectionSpec(): OperationSpec
     {
         static $spec = null;
@@ -622,6 +666,25 @@ final class DamManagementServiceClient
             'DeleteAssetPrefix',
             SdkHttpMethod::DELETE,
             '/assets/prefixes/{prefix_id}',
+            204,
+            [],
+            false,
+            null,
+            false
+        );
+        return $spec;
+    }
+
+    private static function deleteBucketSpec(): OperationSpec
+    {
+        static $spec = null;
+        if ($spec instanceof OperationSpec) {
+            return $spec;
+        }
+        $spec = new OperationSpec(
+            'DeleteBucket',
+            SdkHttpMethod::DELETE,
+            '/buckets/{bucket_name}',
             204,
             [],
             false,
@@ -793,6 +856,25 @@ final class DamManagementServiceClient
             'ListAssetRenditions',
             SdkHttpMethod::GET,
             '/assets/{asset_id}/renditions',
+            200,
+            [],
+            false,
+            null,
+            false
+        );
+        return $spec;
+    }
+
+    private static function listBucketsSpec(): OperationSpec
+    {
+        static $spec = null;
+        if ($spec instanceof OperationSpec) {
+            return $spec;
+        }
+        $spec = new OperationSpec(
+            'ListBuckets',
+            SdkHttpMethod::GET,
+            '/buckets',
             200,
             [],
             false,

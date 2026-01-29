@@ -30,6 +30,9 @@ namespace NimbusSdk\DamManagement;
  * @phpstan-type AssetSortPayload array<string, mixed>
  * @phpstan-type AssetVersionMetadataResponse array<string, mixed>
  * @phpstan-type AssetVersionMetadataResponseMetadataList array<string, mixed>
+ * @phpstan-type BucketListResponse array<string, mixed>
+ * @phpstan-type BucketListResponseItemsList array<string, mixed>
+ * @phpstan-type BucketRecord array<string, mixed>
  * @phpstan-type CollectionListResponse array<string, mixed>
  * @phpstan-type CollectionListResponseItemsList array<string, mixed>
  * @phpstan-type CollectionMembershipChangeRequest array<string, mixed>
@@ -41,6 +44,7 @@ namespace NimbusSdk\DamManagement;
  * @phpstan-type CollectionResponse array<string, mixed>
  * @phpstan-type CompleteIngestionRequest array<string, mixed>
  * @phpstan-type CreateAssetPrefixRequest array<string, mixed>
+ * @phpstan-type CreateBucketRequest array<string, mixed>
  * @phpstan-type CreateCollectionRequest array<string, mixed>
  * @phpstan-type CreatePipelineRequest array<string, mixed>
  * @phpstan-type CreatePipelineRequestRenditionsList array<string, mixed>
