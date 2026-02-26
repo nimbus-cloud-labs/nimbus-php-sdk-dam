@@ -29,32 +29,35 @@ final class DamManagementServiceClient
         return $this->inner;
     }
 
-    public function archiveAsset(array $params, array $body): array
+    public function archiveAsset(array $params, LifecycleRequest|array $body): LifecycleResponse
     {
         $pathParams = [];
         if (!array_key_exists('asset_id', $params)) {
             throw new InvalidPathError('asset_id');
         }
         $pathParams['asset_id'] = (string) $params['asset_id'];
-        $result = $this->inner->invoke(self::archiveAssetSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof LifecycleRequest ? $body : LifecycleRequest::fromArray($body);
+        $result = $this->inner->invoke(self::archiveAssetSpec(), $pathParams, $normalizedBody->toArray());
+        return LifecycleResponse::fromArray((array) $result->body);
     }
 
-    public function beginAssetIngestion(array $body): array
+    public function beginAssetIngestion(IngestionRequest|array $body): IngestionResponse
     {
         $pathParams = [];
-        $result = $this->inner->invoke(self::beginAssetIngestionSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof IngestionRequest ? $body : IngestionRequest::fromArray($body);
+        $result = $this->inner->invoke(self::beginAssetIngestionSpec(), $pathParams, $normalizedBody->toArray());
+        return IngestionResponse::fromArray((array) $result->body);
     }
 
-    public function completeAssetIngestion(array $body): array
+    public function completeAssetIngestion(CompleteIngestionRequest|array $body): OperationResponse
     {
         $pathParams = [];
-        $result = $this->inner->invoke(self::completeAssetIngestionSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof CompleteIngestionRequest ? $body : CompleteIngestionRequest::fromArray($body);
+        $result = $this->inner->invoke(self::completeAssetIngestionSpec(), $pathParams, $normalizedBody->toArray());
+        return OperationResponse::fromArray((array) $result->body);
     }
 
-    public function createAssetDownload(array $params): array
+    public function createAssetDownload(array $params): AssetDownloadResponse
     {
         $pathParams = [];
         if (!array_key_exists('asset_id', $params)) {
@@ -62,17 +65,18 @@ final class DamManagementServiceClient
         }
         $pathParams['asset_id'] = (string) $params['asset_id'];
         $result = $this->inner->invoke(self::createAssetDownloadSpec(), $pathParams, null);
-        return $result->body;
+        return AssetDownloadResponse::fromArray((array) $result->body);
     }
 
-    public function createAssetPrefix(array $body): array
+    public function createAssetPrefix(CreateAssetPrefixRequest|array $body): AssetPrefixResponse
     {
         $pathParams = [];
-        $result = $this->inner->invoke(self::createAssetPrefixSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof CreateAssetPrefixRequest ? $body : CreateAssetPrefixRequest::fromArray($body);
+        $result = $this->inner->invoke(self::createAssetPrefixSpec(), $pathParams, $normalizedBody->toArray());
+        return AssetPrefixResponse::fromArray((array) $result->body);
     }
 
-    public function createAssetRenditionDownload(array $params): array
+    public function createAssetRenditionDownload(array $params): AssetDownloadResponse
     {
         $pathParams = [];
         if (!array_key_exists('asset_id', $params)) {
@@ -84,35 +88,39 @@ final class DamManagementServiceClient
         }
         $pathParams['rendition_id'] = (string) $params['rendition_id'];
         $result = $this->inner->invoke(self::createAssetRenditionDownloadSpec(), $pathParams, null);
-        return $result->body;
+        return AssetDownloadResponse::fromArray((array) $result->body);
     }
 
-    public function createBucket(array $body): array
+    public function createBucket(CreateBucketRequest|array $body): BucketRecord
     {
         $pathParams = [];
-        $result = $this->inner->invoke(self::createBucketSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof CreateBucketRequest ? $body : CreateBucketRequest::fromArray($body);
+        $result = $this->inner->invoke(self::createBucketSpec(), $pathParams, $normalizedBody->toArray());
+        return BucketRecord::fromArray((array) $result->body);
     }
 
-    public function createCollection(array $body): array
+    public function createCollection(CreateCollectionRequest|array $body): CollectionResponse
     {
         $pathParams = [];
-        $result = $this->inner->invoke(self::createCollectionSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof CreateCollectionRequest ? $body : CreateCollectionRequest::fromArray($body);
+        $result = $this->inner->invoke(self::createCollectionSpec(), $pathParams, $normalizedBody->toArray());
+        return CollectionResponse::fromArray((array) $result->body);
     }
 
-    public function createPipeline(array $body): array
+    public function createPipeline(CreatePipelineRequest|array $body): PipelineRecordResponse
     {
         $pathParams = [];
-        $result = $this->inner->invoke(self::createPipelineSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof CreatePipelineRequest ? $body : CreatePipelineRequest::fromArray($body);
+        $result = $this->inner->invoke(self::createPipelineSpec(), $pathParams, $normalizedBody->toArray());
+        return PipelineRecordResponse::fromArray((array) $result->body);
     }
 
-    public function createSmartAlbum(array $body): array
+    public function createSmartAlbum(CreateSmartAlbumRequest|array $body): SmartAlbumResponse
     {
         $pathParams = [];
-        $result = $this->inner->invoke(self::createSmartAlbumSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof CreateSmartAlbumRequest ? $body : CreateSmartAlbumRequest::fromArray($body);
+        $result = $this->inner->invoke(self::createSmartAlbumSpec(), $pathParams, $normalizedBody->toArray());
+        return SmartAlbumResponse::fromArray((array) $result->body);
     }
 
     public function deleteAsset(array $params): mixed
@@ -181,7 +189,7 @@ final class DamManagementServiceClient
         return $result->body;
     }
 
-    public function getAsset(array $params): array
+    public function getAsset(array $params): AssetDetailResponse
     {
         $pathParams = [];
         if (!array_key_exists('asset_id', $params)) {
@@ -189,10 +197,10 @@ final class DamManagementServiceClient
         }
         $pathParams['asset_id'] = (string) $params['asset_id'];
         $result = $this->inner->invoke(self::getAssetSpec(), $pathParams, null);
-        return $result->body;
+        return AssetDetailResponse::fromArray((array) $result->body);
     }
 
-    public function getAssetRendition(array $params): array
+    public function getAssetRendition(array $params): AssetRenditionRecord
     {
         $pathParams = [];
         if (!array_key_exists('asset_id', $params)) {
@@ -204,10 +212,10 @@ final class DamManagementServiceClient
         }
         $pathParams['rendition_id'] = (string) $params['rendition_id'];
         $result = $this->inner->invoke(self::getAssetRenditionSpec(), $pathParams, null);
-        return $result->body;
+        return AssetRenditionRecord::fromArray((array) $result->body);
     }
 
-    public function getAssetVersionMetadata(array $params): array
+    public function getAssetVersionMetadata(array $params): AssetVersionMetadataResponse
     {
         $pathParams = [];
         if (!array_key_exists('asset_id', $params)) {
@@ -219,10 +227,10 @@ final class DamManagementServiceClient
         }
         $pathParams['version_id'] = (string) $params['version_id'];
         $result = $this->inner->invoke(self::getAssetVersionMetadataSpec(), $pathParams, null);
-        return $result->body;
+        return AssetVersionMetadataResponse::fromArray((array) $result->body);
     }
 
-    public function getOperation(array $params): array
+    public function getOperation(array $params): OperationResponse
     {
         $pathParams = [];
         if (!array_key_exists('operation_id', $params)) {
@@ -230,17 +238,17 @@ final class DamManagementServiceClient
         }
         $pathParams['operation_id'] = (string) $params['operation_id'];
         $result = $this->inner->invoke(self::getOperationSpec(), $pathParams, null);
-        return $result->body;
+        return OperationResponse::fromArray((array) $result->body);
     }
 
-    public function listAssetPrefixes(): array
+    public function listAssetPrefixes(): AssetPrefixListResponse
     {
         $pathParams = [];
         $result = $this->inner->invoke(self::listAssetPrefixesSpec(), $pathParams, null);
-        return $result->body;
+        return AssetPrefixListResponse::fromArray((array) $result->body);
     }
 
-    public function listAssetRenditions(array $params): array
+    public function listAssetRenditions(array $params): AssetRenditionListResponse
     {
         $pathParams = [];
         if (!array_key_exists('asset_id', $params)) {
@@ -248,17 +256,17 @@ final class DamManagementServiceClient
         }
         $pathParams['asset_id'] = (string) $params['asset_id'];
         $result = $this->inner->invoke(self::listAssetRenditionsSpec(), $pathParams, null);
-        return $result->body;
+        return AssetRenditionListResponse::fromArray((array) $result->body);
     }
 
-    public function listBuckets(): array
+    public function listBuckets(): BucketListResponse
     {
         $pathParams = [];
         $result = $this->inner->invoke(self::listBucketsSpec(), $pathParams, null);
-        return $result->body;
+        return BucketListResponse::fromArray((array) $result->body);
     }
 
-    public function listCollectionMemberships(array $params): array
+    public function listCollectionMemberships(array $params): CollectionMembershipListResponse
     {
         $pathParams = [];
         if (!array_key_exists('collection_id', $params)) {
@@ -266,68 +274,72 @@ final class DamManagementServiceClient
         }
         $pathParams['collection_id'] = (string) $params['collection_id'];
         $result = $this->inner->invoke(self::listCollectionMembershipsSpec(), $pathParams, null);
-        return $result->body;
+        return CollectionMembershipListResponse::fromArray((array) $result->body);
     }
 
-    public function listCollections(): array
+    public function listCollections(): CollectionListResponse
     {
         $pathParams = [];
         $result = $this->inner->invoke(self::listCollectionsSpec(), $pathParams, null);
-        return $result->body;
+        return CollectionListResponse::fromArray((array) $result->body);
     }
 
-    public function listPipelines(): array
+    public function listPipelines(): PipelineListResponse
     {
         $pathParams = [];
         $result = $this->inner->invoke(self::listPipelinesSpec(), $pathParams, null);
-        return $result->body;
+        return PipelineListResponse::fromArray((array) $result->body);
     }
 
-    public function listSmartAlbums(): array
+    public function listSmartAlbums(): SmartAlbumListResponse
     {
         $pathParams = [];
         $result = $this->inner->invoke(self::listSmartAlbumsSpec(), $pathParams, null);
-        return $result->body;
+        return SmartAlbumListResponse::fromArray((array) $result->body);
     }
 
-    public function operationCallback(array $params, array $body): mixed
+    public function operationCallback(array $params, ProcessorCallbackPayload|array $body): mixed
     {
         $pathParams = [];
         if (!array_key_exists('token', $params)) {
             throw new InvalidPathError('token');
         }
         $pathParams['token'] = (string) $params['token'];
-        $result = $this->inner->invoke(self::operationCallbackSpec(), $pathParams, $body);
+        $normalizedBody = $body instanceof ProcessorCallbackPayload ? $body : ProcessorCallbackPayload::fromArray($body);
+        $result = $this->inner->invoke(self::operationCallbackSpec(), $pathParams, $normalizedBody->toArray());
         return $result->body;
     }
 
-    public function publishAsset(array $params, array $body): array
+    public function publishAsset(array $params, LifecycleRequest|array $body): LifecycleResponse
     {
         $pathParams = [];
         if (!array_key_exists('asset_id', $params)) {
             throw new InvalidPathError('asset_id');
         }
         $pathParams['asset_id'] = (string) $params['asset_id'];
-        $result = $this->inner->invoke(self::publishAssetSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof LifecycleRequest ? $body : LifecycleRequest::fromArray($body);
+        $result = $this->inner->invoke(self::publishAssetSpec(), $pathParams, $normalizedBody->toArray());
+        return LifecycleResponse::fromArray((array) $result->body);
     }
 
-    public function putCollectionMemberships(array $params, array $body): array
+    public function putCollectionMemberships(array $params, CollectionMembershipChangeRequest|array $body): CollectionMembershipListResponse
     {
         $pathParams = [];
         if (!array_key_exists('collection_id', $params)) {
             throw new InvalidPathError('collection_id');
         }
         $pathParams['collection_id'] = (string) $params['collection_id'];
-        $result = $this->inner->invoke(self::putCollectionMembershipsSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof CollectionMembershipChangeRequest ? $body : CollectionMembershipChangeRequest::fromArray($body);
+        $result = $this->inner->invoke(self::putCollectionMembershipsSpec(), $pathParams, $normalizedBody->toArray());
+        return CollectionMembershipListResponse::fromArray((array) $result->body);
     }
 
-    public function recordIndexSnapshot(array $body): array
+    public function recordIndexSnapshot(IndexSnapshotRequest|array $body): IndexSnapshotResponse
     {
         $pathParams = [];
-        $result = $this->inner->invoke(self::recordIndexSnapshotSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof IndexSnapshotRequest ? $body : IndexSnapshotRequest::fromArray($body);
+        $result = $this->inner->invoke(self::recordIndexSnapshotSpec(), $pathParams, $normalizedBody->toArray());
+        return IndexSnapshotResponse::fromArray((array) $result->body);
     }
 
     public function removeCollectionMembership(array $params): mixed
@@ -345,25 +357,27 @@ final class DamManagementServiceClient
         return $result->body;
     }
 
-    public function rerunPipelines(array $body): array
+    public function rerunPipelines(PipelineRerunRequest|array $body): PipelineRerunResponse
     {
         $pathParams = [];
-        $result = $this->inner->invoke(self::rerunPipelinesSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof PipelineRerunRequest ? $body : PipelineRerunRequest::fromArray($body);
+        $result = $this->inner->invoke(self::rerunPipelinesSpec(), $pathParams, $normalizedBody->toArray());
+        return PipelineRerunResponse::fromArray((array) $result->body);
     }
 
-    public function restoreAsset(array $params, array $body): array
+    public function restoreAsset(array $params, LifecycleRequest|array $body): LifecycleResponse
     {
         $pathParams = [];
         if (!array_key_exists('asset_id', $params)) {
             throw new InvalidPathError('asset_id');
         }
         $pathParams['asset_id'] = (string) $params['asset_id'];
-        $result = $this->inner->invoke(self::restoreAssetSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof LifecycleRequest ? $body : LifecycleRequest::fromArray($body);
+        $result = $this->inner->invoke(self::restoreAssetSpec(), $pathParams, $normalizedBody->toArray());
+        return LifecycleResponse::fromArray((array) $result->body);
     }
 
-    public function retryOperation(array $params): array
+    public function retryOperation(array $params): OperationResponse
     {
         $pathParams = [];
         if (!array_key_exists('operation_id', $params)) {
@@ -371,35 +385,38 @@ final class DamManagementServiceClient
         }
         $pathParams['operation_id'] = (string) $params['operation_id'];
         $result = $this->inner->invoke(self::retryOperationSpec(), $pathParams, null);
-        return $result->body;
+        return OperationResponse::fromArray((array) $result->body);
     }
 
-    public function searchAssets(array $body): array
+    public function searchAssets(AssetSearchRequest|array $body): AssetSearchResponse
     {
         $pathParams = [];
-        $result = $this->inner->invoke(self::searchAssetsSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof AssetSearchRequest ? $body : AssetSearchRequest::fromArray($body);
+        $result = $this->inner->invoke(self::searchAssetsSpec(), $pathParams, $normalizedBody->toArray());
+        return AssetSearchResponse::fromArray((array) $result->body);
     }
 
-    public function searchAssetsWithBody(array $body): array
+    public function searchAssetsWithBody(AssetSearchRequest|array $body): AssetSearchResponse
     {
         $pathParams = [];
-        $result = $this->inner->invoke(self::searchAssetsWithBodySpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof AssetSearchRequest ? $body : AssetSearchRequest::fromArray($body);
+        $result = $this->inner->invoke(self::searchAssetsWithBodySpec(), $pathParams, $normalizedBody->toArray());
+        return AssetSearchResponse::fromArray((array) $result->body);
     }
 
-    public function updateAssetCustomMetadata(array $params, array $body): mixed
+    public function updateAssetCustomMetadata(array $params, CustomMetadataRequest|array $body): mixed
     {
         $pathParams = [];
         if (!array_key_exists('asset_id', $params)) {
             throw new InvalidPathError('asset_id');
         }
         $pathParams['asset_id'] = (string) $params['asset_id'];
-        $result = $this->inner->invoke(self::updateAssetCustomMetadataSpec(), $pathParams, $body);
+        $normalizedBody = $body instanceof CustomMetadataRequest ? $body : CustomMetadataRequest::fromArray($body);
+        $result = $this->inner->invoke(self::updateAssetCustomMetadataSpec(), $pathParams, $normalizedBody->toArray());
         return $result->body;
     }
 
-    public function updateAssetVersionCustomMetadata(array $params, array $body): mixed
+    public function updateAssetVersionCustomMetadata(array $params, CustomMetadataRequest|array $body): mixed
     {
         $pathParams = [];
         if (!array_key_exists('asset_id', $params)) {
@@ -410,41 +427,45 @@ final class DamManagementServiceClient
             throw new InvalidPathError('version_id');
         }
         $pathParams['version_id'] = (string) $params['version_id'];
-        $result = $this->inner->invoke(self::updateAssetVersionCustomMetadataSpec(), $pathParams, $body);
+        $normalizedBody = $body instanceof CustomMetadataRequest ? $body : CustomMetadataRequest::fromArray($body);
+        $result = $this->inner->invoke(self::updateAssetVersionCustomMetadataSpec(), $pathParams, $normalizedBody->toArray());
         return $result->body;
     }
 
-    public function updateCollection(array $params, array $body): array
+    public function updateCollection(array $params, UpdateCollectionRequest|array $body): CollectionResponse
     {
         $pathParams = [];
         if (!array_key_exists('collection_id', $params)) {
             throw new InvalidPathError('collection_id');
         }
         $pathParams['collection_id'] = (string) $params['collection_id'];
-        $result = $this->inner->invoke(self::updateCollectionSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof UpdateCollectionRequest ? $body : UpdateCollectionRequest::fromArray($body);
+        $result = $this->inner->invoke(self::updateCollectionSpec(), $pathParams, $normalizedBody->toArray());
+        return CollectionResponse::fromArray((array) $result->body);
     }
 
-    public function updatePipeline(array $params, array $body): array
+    public function updatePipeline(array $params, UpdatePipelineRequest|array $body): PipelineRecordResponse
     {
         $pathParams = [];
         if (!array_key_exists('pipeline_id', $params)) {
             throw new InvalidPathError('pipeline_id');
         }
         $pathParams['pipeline_id'] = (string) $params['pipeline_id'];
-        $result = $this->inner->invoke(self::updatePipelineSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof UpdatePipelineRequest ? $body : UpdatePipelineRequest::fromArray($body);
+        $result = $this->inner->invoke(self::updatePipelineSpec(), $pathParams, $normalizedBody->toArray());
+        return PipelineRecordResponse::fromArray((array) $result->body);
     }
 
-    public function updateSmartAlbum(array $params, array $body): array
+    public function updateSmartAlbum(array $params, UpdateSmartAlbumRequest|array $body): SmartAlbumResponse
     {
         $pathParams = [];
         if (!array_key_exists('album_id', $params)) {
             throw new InvalidPathError('album_id');
         }
         $pathParams['album_id'] = (string) $params['album_id'];
-        $result = $this->inner->invoke(self::updateSmartAlbumSpec(), $pathParams, $body);
-        return $result->body;
+        $normalizedBody = $body instanceof UpdateSmartAlbumRequest ? $body : UpdateSmartAlbumRequest::fromArray($body);
+        $result = $this->inner->invoke(self::updateSmartAlbumSpec(), $pathParams, $normalizedBody->toArray());
+        return SmartAlbumResponse::fromArray((array) $result->body);
     }
 
     private static function archiveAssetSpec(): OperationSpec
